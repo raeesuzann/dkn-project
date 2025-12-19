@@ -9,27 +9,142 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as PublicRouteImport } from './routes/_public'
+import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as PublicRegisterIndexRouteImport } from './routes/_public/register/index'
+import { Route as PublicLoginIndexRouteImport } from './routes/_public/login/index'
 
-export interface FileRoutesByFullPath {}
-export interface FileRoutesByTo {}
+const PublicRoute = PublicRouteImport.update({
+  id: '/_public',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRoute = AuthenticatedRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const PublicRegisterIndexRoute = PublicRegisterIndexRouteImport.update({
+  id: '/register/',
+  path: '/register/',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicLoginIndexRoute = PublicLoginIndexRouteImport.update({
+  id: '/login/',
+  path: '/login/',
+  getParentRoute: () => PublicRoute,
+} as any)
+
+export interface FileRoutesByFullPath {
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/login': typeof PublicLoginIndexRoute
+  '/register': typeof PublicRegisterIndexRoute
+}
+export interface FileRoutesByTo {
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/login': typeof PublicLoginIndexRoute
+  '/register': typeof PublicRegisterIndexRoute
+}
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
+  '/_public': typeof PublicRouteWithChildren
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_public/login/': typeof PublicLoginIndexRoute
+  '/_public/register/': typeof PublicRegisterIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: never
+  fullPaths: '/dashboard' | '/login' | '/register'
   fileRoutesByTo: FileRoutesByTo
-  to: never
-  id: '__root__'
+  to: '/dashboard' | '/login' | '/register'
+  id:
+    | '__root__'
+    | '/_authenticated'
+    | '/_public'
+    | '/_authenticated/dashboard'
+    | '/_public/login/'
+    | '/_public/register/'
   fileRoutesById: FileRoutesById
 }
-export interface RootRouteChildren {}
-
-declare module '@tanstack/react-router' {
-  interface FileRoutesByPath {}
+export interface RootRouteChildren {
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
+  PublicRoute: typeof PublicRouteWithChildren
 }
 
-const rootRouteChildren: RootRouteChildren = {}
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/_public': {
+      id: '/_public'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof PublicRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthenticatedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_public/register/': {
+      id: '/_public/register/'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof PublicRegisterIndexRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/login/': {
+      id: '/_public/login/'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof PublicLoginIndexRouteImport
+      parentRoute: typeof PublicRoute
+    }
+  }
+}
+
+interface AuthenticatedRouteChildren {
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
+
+interface PublicRouteChildren {
+  PublicLoginIndexRoute: typeof PublicLoginIndexRoute
+  PublicRegisterIndexRoute: typeof PublicRegisterIndexRoute
+}
+
+const PublicRouteChildren: PublicRouteChildren = {
+  PublicLoginIndexRoute: PublicLoginIndexRoute,
+  PublicRegisterIndexRoute: PublicRegisterIndexRoute,
+}
+
+const PublicRouteWithChildren =
+  PublicRoute._addFileChildren(PublicRouteChildren)
+
+const rootRouteChildren: RootRouteChildren = {
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
+  PublicRoute: PublicRouteWithChildren,
+}
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
