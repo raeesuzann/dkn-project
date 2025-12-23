@@ -1,3 +1,4 @@
+import Sidebar from '@/components/layout/sidebar';
 import { createRootRouteWithContext, Outlet } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 
@@ -14,9 +15,12 @@ interface MyRouterContext {
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   component: () => (
-    <div>
-      <Outlet />
+    <>
+      <div className="flex">
+        <Sidebar />
+        <Outlet />
+      </div>
       <TanStackRouterDevtools />
-    </div>
+    </>
   ),
 });
