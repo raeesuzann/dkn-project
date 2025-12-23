@@ -1,6 +1,7 @@
 import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { AuthProvider, useAuth } from './providers/auth.provider';
 import { routeTree } from './routeTree.gen';
+import { GlobalProvider } from './providers/global.provider';
 
 const router = createRouter({
   routeTree,
@@ -30,7 +31,9 @@ function InnerApp() {
 function App() {
   return (
     <AuthProvider>
-      <InnerApp />
+      <GlobalProvider>
+        <InnerApp />
+      </GlobalProvider>
     </AuthProvider>
   );
 }

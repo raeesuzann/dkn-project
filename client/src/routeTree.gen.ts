@@ -11,10 +11,13 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PublicRouteImport } from './routes/_public'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
+import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
 import { Route as AuthenticatedLeaderboardRouteImport } from './routes/_authenticated/leaderboard'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as PublicRegisterIndexRouteImport } from './routes/_public/register/index'
 import { Route as PublicLoginIndexRouteImport } from './routes/_public/login/index'
+import { Route as AuthenticatedContentsIndexRouteImport } from './routes/_authenticated/contents/index'
+import { Route as AuthenticatedContentsContentIdRouteImport } from './routes/_authenticated/contents/$contentId'
 
 const PublicRoute = PublicRouteImport.update({
   id: '/_public',
@@ -23,6 +26,11 @@ const PublicRoute = PublicRouteImport.update({
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedReportsRoute = AuthenticatedReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 const AuthenticatedLeaderboardRoute =
   AuthenticatedLeaderboardRouteImport.update({
@@ -45,16 +53,34 @@ const PublicLoginIndexRoute = PublicLoginIndexRouteImport.update({
   path: '/login/',
   getParentRoute: () => PublicRoute,
 } as any)
+const AuthenticatedContentsIndexRoute =
+  AuthenticatedContentsIndexRouteImport.update({
+    id: '/contents/',
+    path: '/contents/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedContentsContentIdRoute =
+  AuthenticatedContentsContentIdRouteImport.update({
+    id: '/contents/$contentId',
+    path: '/contents/$contentId',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/leaderboard': typeof AuthenticatedLeaderboardRoute
+  '/reports': typeof AuthenticatedReportsRoute
+  '/contents/$contentId': typeof AuthenticatedContentsContentIdRoute
+  '/contents': typeof AuthenticatedContentsIndexRoute
   '/login': typeof PublicLoginIndexRoute
   '/register': typeof PublicRegisterIndexRoute
 }
 export interface FileRoutesByTo {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/leaderboard': typeof AuthenticatedLeaderboardRoute
+  '/reports': typeof AuthenticatedReportsRoute
+  '/contents/$contentId': typeof AuthenticatedContentsContentIdRoute
+  '/contents': typeof AuthenticatedContentsIndexRoute
   '/login': typeof PublicLoginIndexRoute
   '/register': typeof PublicRegisterIndexRoute
 }
@@ -64,20 +90,40 @@ export interface FileRoutesById {
   '/_public': typeof PublicRouteWithChildren
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/leaderboard': typeof AuthenticatedLeaderboardRoute
+  '/_authenticated/reports': typeof AuthenticatedReportsRoute
+  '/_authenticated/contents/$contentId': typeof AuthenticatedContentsContentIdRoute
+  '/_authenticated/contents/': typeof AuthenticatedContentsIndexRoute
   '/_public/login/': typeof PublicLoginIndexRoute
   '/_public/register/': typeof PublicRegisterIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/dashboard' | '/leaderboard' | '/login' | '/register'
+  fullPaths:
+    | '/dashboard'
+    | '/leaderboard'
+    | '/reports'
+    | '/contents/$contentId'
+    | '/contents'
+    | '/login'
+    | '/register'
   fileRoutesByTo: FileRoutesByTo
-  to: '/dashboard' | '/leaderboard' | '/login' | '/register'
+  to:
+    | '/dashboard'
+    | '/leaderboard'
+    | '/reports'
+    | '/contents/$contentId'
+    | '/contents'
+    | '/login'
+    | '/register'
   id:
     | '__root__'
     | '/_authenticated'
     | '/_public'
     | '/_authenticated/dashboard'
     | '/_authenticated/leaderboard'
+    | '/_authenticated/reports'
+    | '/_authenticated/contents/$contentId'
+    | '/_authenticated/contents/'
     | '/_public/login/'
     | '/_public/register/'
   fileRoutesById: FileRoutesById
@@ -102,6 +148,13 @@ declare module '@tanstack/react-router' {
       fullPath: ''
       preLoaderRoute: typeof AuthenticatedRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/reports': {
+      id: '/_authenticated/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof AuthenticatedReportsRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/leaderboard': {
       id: '/_authenticated/leaderboard'
@@ -131,17 +184,37 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicLoginIndexRouteImport
       parentRoute: typeof PublicRoute
     }
+    '/_authenticated/contents/': {
+      id: '/_authenticated/contents/'
+      path: '/contents'
+      fullPath: '/contents'
+      preLoaderRoute: typeof AuthenticatedContentsIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/contents/$contentId': {
+      id: '/_authenticated/contents/$contentId'
+      path: '/contents/$contentId'
+      fullPath: '/contents/$contentId'
+      preLoaderRoute: typeof AuthenticatedContentsContentIdRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
 interface AuthenticatedRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedLeaderboardRoute: typeof AuthenticatedLeaderboardRoute
+  AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
+  AuthenticatedContentsContentIdRoute: typeof AuthenticatedContentsContentIdRoute
+  AuthenticatedContentsIndexRoute: typeof AuthenticatedContentsIndexRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedLeaderboardRoute: AuthenticatedLeaderboardRoute,
+  AuthenticatedReportsRoute: AuthenticatedReportsRoute,
+  AuthenticatedContentsContentIdRoute: AuthenticatedContentsContentIdRoute,
+  AuthenticatedContentsIndexRoute: AuthenticatedContentsIndexRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
