@@ -5,5 +5,9 @@ export const Route = createFileRoute('/_authenticated/leaderboard')({
 });
 
 function Leaderboard() {
-  return <div id="leaderboard">Leaderboard</div>;
+  return (
+    <div id="leaderboard">
+      Leaderboard / Frequently Accessed Content List / Top Contributors
+    </div>
+  );
 }

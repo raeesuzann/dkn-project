@@ -1,9 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_authenticated/contents/$contentId')({
-  component: RouteComponent,
+  component: ContentDetails,
 })
 
-function RouteComponent() {
+function ContentDetails() {
   return <div>Hello "/_authenticated/contents/$contentId"!</div>
 }

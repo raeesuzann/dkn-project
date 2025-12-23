@@ -1,3 +1,4 @@
+import Footer from '@/components/layout/footer';
 import Navbar from '@/components/layout/navbar';
 import Sidebar from '@/components/layout/sidebar';
 import { useGlobal } from '@/providers/global.provider';
@@ -22,11 +23,12 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
       <>
         <div className="flex w-full h-full">
           {isSidebarOpen && <Sidebar />}
-          <div className="w-full">
+          <div className="flex flex-col w-full">
             <Navbar />
-            <div className="px-3 py-2">
+            <div className="px-3 py-2 grow">
               <Outlet />
             </div>
+            <Footer />
           </div>
         </div>
         <TanStackRouterDevtools />

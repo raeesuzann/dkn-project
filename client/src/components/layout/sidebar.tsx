@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router';
-import { Book, ChartScatter, Home, KanbanSquare } from 'lucide-react';
+import { Book, ChartScatter, Home, KanbanSquare, Users } from 'lucide-react';
 
 const sidebarItems = [
   {
@@ -21,6 +21,11 @@ const sidebarItems = [
     icon: <ChartScatter size={20} />,
     title: 'Reports',
     link: '/reports',
+  },
+  {
+    icon: <Users size={20}/>,
+    title: 'User Management',
+    link: '/user-management',
   },
 ];
 
