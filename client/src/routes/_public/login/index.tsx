@@ -7,8 +7,6 @@ export const Route = createFileRoute('/_public/login/')({
 
 function LoginComponent() {
   const { auth } = Route.useRouteContext();
-  const { redirect } = Route.useSearch();
-  const navigate = Route.useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -22,8 +20,8 @@ function LoginComponent() {
     try {
       await auth.login(username, password);
       // Navigate to the redirect URL using router navigation
-      navigate({ to: redirect });
     } catch (err) {
+      console.log(err);
       setError('Invalid username or password');
     } finally {
       setIsLoading(false);
