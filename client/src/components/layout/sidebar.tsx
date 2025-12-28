@@ -1,5 +1,7 @@
+import { useGlobal } from '@/providers/global.provider';
 import { Link } from '@tanstack/react-router';
 import { Book, ChartScatter, Home, KanbanSquare, Users } from 'lucide-react';
+import { twMerge } from 'tailwind-merge';
 
 const sidebarItems = [
   {
@@ -23,25 +25,36 @@ const sidebarItems = [
     link: '/reports',
   },
   {
-    icon: <Users size={20}/>,
+    icon: <Users size={20} />,
     title: 'User Management',
     link: '/user-management',
   },
 ];
 
 function Sidebar() {
+  const { isSidebarOpen } = useGlobal();
+
   return (
-    <div id="sidebar" className="flex flex-col w-[250px] shrink-0 p-3">
+    <div
+      id="sidebar"
+      className={twMerge(
+        'flex flex-col shrink-0 transition delay-300',
+        isSidebarOpen ? 'w-[250px] p-3' : 'w-[60px] p-2'
+      )}
+    >
       <h3 className="mt-8 mb-16 text-center text-2xl font-semibold">
-        DKN System
+        {isSidebarOpen ? 'DKN System' : 'DKN'}
       </h3>
       {sidebarItems.map((item) => (
         <Link
           to={item.link}
-          className="flex items-center gap-2 mb-2  hover:bg-gray-400 hover:rounded-md p-2"
+          className={twMerge(
+            'flex items-center gap-2 mb-2 hover:bg-gray-400 hover:rounded-md',
+            isSidebarOpen ? 'p-2' : 'justify-center p-3'
+          )}
         >
           {item.icon}
-          {item.title}
+          {isSidebarOpen && item.title}
         </Link>
       ))}
     </div>

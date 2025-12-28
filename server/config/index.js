@@ -10,7 +10,7 @@ const config = {
   port: Number(process.env.PORT) || 5000,
   nodeEnv: process.env.NODE_ENV ?? 'development',
   dbName: process.env.DB_NAME ?? null,
-  dbHost: process.env.DB_HOST ??null,
+  dbHost: process.env.DB_HOST ?? null,
   dbUser: process.env.DB_USER ?? null,
   dbPassword: process.env.DB_PASS ?? null,
   dbPort: Number(process.env.DB_PORT ?? null),
@@ -23,14 +23,6 @@ const config = {
   emailClientSecret: process.env.GOOGLE_CLIENT_SECRET ?? null,
   emailAccessToken: process.env.GOOGLE_ACCESS_TOKEN ?? null,
   emailRefreshToken: process.env.GOOGLE_REFRESH_TOKEN ?? null,
-
-  // ConnectIPS
-  cipsBaseUrl: process.env.CONNECTIPS_BASE_URL ?? null,
-  cipsAppId: process.env.CONNECTIPS_MERCHANT_APP_ID ?? null,
-  cipsMerchantId: +process.env.CONNECTIPS_MERCHANT_ID ?? null,
-  cipsMerchantPassword: process.env.CONNECTIPS_MERCHANT_USER_PASSWORD ?? null,
-  cipsFileKeyName: process.env.CONNECTIPS_KEY_FILENAME ?? null,
-  cipsCreditorPwd: process.env.CONNECTIPS_CREDITOR_PASSWORD ?? null,
 };
 
 export default config;

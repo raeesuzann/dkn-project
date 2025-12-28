@@ -1,6 +1,18 @@
-import express from 'express';
+import cors from 'cors';
+import express, { json, urlencoded } from 'express';
+import { loggerMiddleware } from './middleware/logger.middleware.js';
 
 const app = express();
+app.use(
+  cors({
+    origin: '*',
+    credentials: false,
+  })
+);
+
+app.use(json());
+app.use(urlencoded({ extended: true }));
+app.use(loggerMiddleware);
 
 app.get('/', (req, res) => {
   res.json({ title: 'Hello World' });
