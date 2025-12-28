@@ -1,9 +1,20 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { Table } from '@/components/table';
+import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_authenticated/contents/')({
   component: ContentList,
-})
+});
 
 function ContentList() {
-  return <div>All contents / Knowledge / Frameworks List</div>
+  return (
+    <div id="contents">
+      <h3 className="mb-8 text-3xl font-semibold">Contents</h3>
+      <Table
+        searchPlaceholder="Search Contents, Knowledge or Artifacts"
+        actions={<button>Add</button>}
+        data={[]}
+        columns={[]}
+      />
+    </div>
+  );
 }

@@ -1,6 +1,6 @@
 import { useGlobal } from '@/providers/global.provider';
 import { Link } from '@tanstack/react-router';
-import { Book, ChartScatter, Home, KanbanSquare, Users } from 'lucide-react';
+import { Book, BookCheck, ChartScatter, Home, KanbanSquare, Users } from 'lucide-react';
 import { twMerge } from 'tailwind-merge';
 
 const sidebarItems = [
@@ -10,8 +10,8 @@ const sidebarItems = [
     link: '/dashboard',
   },
   {
-    icon: <Book />,
-    title: 'Contents',
+    icon: <BookCheck />,
+    title: 'Documents',
     link: '/contents',
   },
   {
@@ -29,6 +29,11 @@ const sidebarItems = [
     title: 'User Management',
     link: '/user-management',
   },
+  {
+    icon: <Book />,
+    title: "Awaiting Documents",
+    link: "/awaiting-documents"
+  }
 ];
 
 function Sidebar() {
@@ -49,7 +54,7 @@ function Sidebar() {
         <Link
           to={item.link}
           className={twMerge(
-            'flex items-center gap-2 mb-2 hover:bg-gray-400 hover:rounded-md',
+            'flex items-center gap-2 mb-2 rounded-md hover:bg-gray-400 [&.active]:text-white [&.active]:bg-gray-600',
             isSidebarOpen ? 'p-2' : 'justify-center p-3'
           )}
         >
