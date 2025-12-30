@@ -1,16 +1,13 @@
 import bcrypt from 'bcrypt';
 import { and, eq } from 'drizzle-orm';
-import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
-import { CustomPayload } from '../@types/custom.interface.js';
-import config from '../config/config.js';
+import config from '../config/index.js';
 import { db } from '../db/index.js';
 import { users } from '../db/schema/users.js';
 
 import { roles } from '../db/schema/roles.js';
 import { usersToRoles } from '../db/schema/users_roles.js';
-import { Role } from '../enum/roles.enum.js';
 import { getPasswordHash } from '../services/bcrypt/password-hash.js';
 import { registerUser } from '../services/shared/user.service.js';
 import { sendSetPasswordMail } from '../services/shared/email.service.js';
@@ -225,7 +222,7 @@ export {
   changePassword,
   forgotPassword,
   setPassword,
-  signIn,
+  login,
   signUp,
   verifyToken,
 };

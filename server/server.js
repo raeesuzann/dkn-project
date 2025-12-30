@@ -2,6 +2,9 @@ import cors from 'cors';
 import express, { json, urlencoded } from 'express';
 import { loggerMiddleware } from './middleware/logger.middleware.js';
 
+import authRoutes from './routes/auth.routes.js';
+import { contentRoutes } from './routes/content.route.js';
+
 const app = express();
 app.use(
   cors({
@@ -18,7 +21,8 @@ app.get('/', (req, res) => {
   res.json({ title: 'Hello World' });
 });
 
-app.route('/api/v1/auth');
+app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/content', contentRoutes);
 
 const PORT = 5000;
 

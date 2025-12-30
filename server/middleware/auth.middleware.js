@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-import config from '../config/config.js';
+import config from '../config/index.js';
 
 export const authenticate = (req, res, next) => {
   const authHeader = req.headers.authorization;

@@ -1,7 +1,7 @@
 import { drizzle } from 'drizzle-orm/node-postgres';
-
 import { Client } from 'pg';
-import config from '../config';
+
+import config from '../config/index.js';
 import { schema } from './schema/index.js';
 
 const client = new Client({
