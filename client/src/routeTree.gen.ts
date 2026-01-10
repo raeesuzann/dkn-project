@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PublicRouteImport } from './routes/_public'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
+import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
 import { Route as AuthenticatedLeaderboardRouteImport } from './routes/_authenticated/leaderboard'
 import { Route as PublicRegisterIndexRouteImport } from './routes/_public/register/index'
@@ -28,6 +29,11 @@ const PublicRoute = PublicRouteImport.update({
 } as any)
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
   id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedReportsRoute = AuthenticatedReportsRouteImport.update({
@@ -89,6 +95,7 @@ const AuthenticatedContentsContentIdEditRoute =
   } as any)
 
 export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
   '/leaderboard': typeof AuthenticatedLeaderboardRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/contents/$contentId': typeof AuthenticatedContentsContentIdRouteWithChildren
@@ -101,6 +108,7 @@ export interface FileRoutesByFullPath {
   '/contents/$contentId/edit': typeof AuthenticatedContentsContentIdEditRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof IndexRoute
   '/leaderboard': typeof AuthenticatedLeaderboardRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/contents/$contentId': typeof AuthenticatedContentsContentIdRouteWithChildren
@@ -114,6 +122,7 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/_public': typeof PublicRouteWithChildren
   '/_authenticated/leaderboard': typeof AuthenticatedLeaderboardRoute
@@ -130,6 +139,7 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/'
     | '/leaderboard'
     | '/reports'
     | '/contents/$contentId'
@@ -142,6 +152,7 @@ export interface FileRouteTypes {
     | '/contents/$contentId/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/'
     | '/leaderboard'
     | '/reports'
     | '/contents/$contentId'
@@ -154,6 +165,7 @@ export interface FileRouteTypes {
     | '/contents/$contentId/edit'
   id:
     | '__root__'
+    | '/'
     | '/_authenticated'
     | '/_public'
     | '/_authenticated/leaderboard'
@@ -169,6 +181,7 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   PublicRoute: typeof PublicRouteWithChildren
 }
@@ -187,6 +200,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: ''
       preLoaderRoute: typeof AuthenticatedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/reports': {
@@ -317,6 +337,7 @@ const PublicRouteWithChildren =
   PublicRoute._addFileChildren(PublicRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
   PublicRoute: PublicRouteWithChildren,
 }

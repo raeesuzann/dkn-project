@@ -34,7 +34,8 @@ function LoginComponent() {
         onSubmit={handleSubmit}
         className="max-w-md w-full space-y-4 p-6 border rounded-lg"
       >
-        <h1 className="text-2xl font-bold text-center">Sign In</h1>
+        <h1 className="text-2xl font-bold text-center">DKN System</h1>
+        <h3 className="text-lg font-semibold text-center">Sign In</h3>
 
         {error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">

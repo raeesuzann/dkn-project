@@ -1,6 +1,3 @@
-import Footer from '@/components/layout/footer';
-import Navbar from '@/components/layout/navbar';
-import Sidebar from '@/components/layout/sidebar';
 import { createRootRouteWithContext, Outlet } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 
@@ -19,16 +16,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
   component: () => {
     return (
       <>
-        <div className="flex w-full h-full">
-          <Sidebar />
-          <div className="flex flex-col w-full">
-            <Navbar />
-            <div className="px-3 py-2 grow">
-              <Outlet />
-            </div>
-            <Footer />
-          </div>
-        </div>
+        <Outlet />
         <TanStackRouterDevtools />
       </>
     );
