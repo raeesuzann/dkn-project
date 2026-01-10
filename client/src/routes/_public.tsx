@@ -2,7 +2,8 @@ import { createFileRoute, Outlet, redirect } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_public')({
   validateSearch: (search) => ({
-    redirect: (search.redirect as string) || '/dashboard',
+    redirect:
+      typeof search.redirect === 'string' ? search.redirect : '/dashboard',
   }),
   beforeLoad: ({ context, search }) => {
     // Redirect if already authenticated
@@ -10,5 +11,9 @@ export const Route = createFileRoute('/_public')({
       throw redirect({ to: search.redirect });
     }
   },
-  component: () => <Outlet />,
+  component: () => (
+    <div className="w-full min-h-screen flex justify-center items-center">
+      <Outlet />
+    </div>
+  ),
 });
