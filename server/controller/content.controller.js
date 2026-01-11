@@ -15,6 +15,7 @@ export const getContentDetailsById = async (req, res, next) => {
 
 export const addContent = async (req, res, next) => {
   try {
+    
   } catch (error) {
     next(error);
   }

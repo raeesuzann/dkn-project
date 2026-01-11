@@ -4,8 +4,8 @@ import Sidebar from '@/components/layout/sidebar';
 import { createFileRoute, redirect, Outlet } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_authenticated')({
-  beforeLoad: ({ context, location }) => {
-    if (!context.auth.isAuthenticated) {
+  beforeLoad: ({ location }) => {
+    if (!localStorage.getItem('token')) {
       throw redirect({
         to: '/login',
         search: {

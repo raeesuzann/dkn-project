@@ -11,7 +11,7 @@ import { authenticate } from '../middleware/auth.middleware.js';
 
 const router = Router();
 
-router.post('/sign-in', login);
+router.post('/login', login);
 router.post('/register', signUp);
 router.put('/set-password', setPassword);
 router.put('/change-password', changePassword);

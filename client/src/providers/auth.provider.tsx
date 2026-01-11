@@ -1,4 +1,5 @@
 import Loading from '@/components/ui/loading';
+import { api } from '@/lib/axios/config';
 import { useNavigate } from '@tanstack/react-router';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
@@ -18,60 +19,53 @@ export interface AuthState {
 const AuthContext = createContext<AuthState | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  const verifyToken = async () => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const results = await api.get('/auth/verify-token', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (results.data.data) {
+        setUser(results.data.data);
+        setIsAuthenticated(true);
+      } else {
+        setUser(null);
+        setIsAuthenticated(false);
+        localStorage.removeItem('token');
+      }
+    }
+  };
 
   // Restore auth state on app load
   useEffect(() => {
-    const token = localStorage.getItem('auth-token');
-    if (token) {
-      // Validate token with your API
-      fetch('/api/validate-token', {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-        .then((response) => response.json())
-        .then((userData) => {
-          if (userData.valid) {
-            setUser(userData.user);
-            setIsAuthenticated(true);
-          } else {
-            localStorage.removeItem('auth-token');
-          }
-        })
-        .catch(() => {
-          localStorage.removeItem('auth-token');
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    }
+    verifyToken();
     setIsLoading(false);
   }, []);
 
   // Show loading state while checking auth
   if (isLoading) return <Loading />;
 
-  const login = async (username: string, password: string) => {
-    // const response = await api.post('/login', { username, password });
+  const login = async (email: string, password: string) => {
+    const response = await api.post('/auth/login', { email, password });
 
-    setIsAuthenticated(true);
-    navigate({ to: '/dashboard' });
-    // if (response.data) {
-    //   setUser(response.data);
-    //   setIsAuthenticated(true);
-    //   // Store token for persistence
-    //   localStorage.setItem('auth-token', response.data.token);
-    // } else {
-    //   throw new Error('Authentication failed');
-    // }
+    if (response.data) {
+      setIsAuthenticated(true);
+      // Store token for persistence
+      localStorage.setItem('token', response.data.data);
+    } else {
+      throw new Error('Authentication failed');
+    }
   };
 
   const logout = () => {
     setUser(null);
     setIsAuthenticated(false);
-    localStorage.removeItem('auth-token');
+    localStorage.removeItem('token');
   };
 
   return (

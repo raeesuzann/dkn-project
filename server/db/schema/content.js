@@ -1,11 +1,14 @@
 import {
   boolean,
+  integer,
   numeric,
   pgTable,
   serial,
   varchar,
 } from 'drizzle-orm/pg-core';
 import { timestamps } from '../helpers/timestamps.js';
+import { relations } from 'drizzle-orm';
+import { users } from './users.js';
 
 export const contents = pgTable('contents', {
   id: serial('id').primaryKey(),
@@ -21,5 +24,15 @@ export const contents = pgTable('contents', {
   isRegional: boolean('is_regional').default(false),
   isGDPRChecked: boolean('is_gdpr_checked').default(false),
   isActive: boolean('is_active').default(true),
+  userId: integer('user_id')
+    .references(() => users.id)
+    .notNull(),
   ...timestamps,
 });
+
+export const contentsRelations = relations(contents, ({ one }) => ({
+  user: one(users, {
+    fields: [contents.id],
+    references: [users.id],
+  }),
+}));

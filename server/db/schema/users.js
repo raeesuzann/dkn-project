@@ -9,6 +9,7 @@ import {
 import { timestamps } from '../helpers/timestamps.js';
 import { userProfile } from './user_profile.js';
 import { usersToRoles } from './users_roles.js';
+import { contents } from './content.js';
 
 export const users = pgTable('users', {
   id: serial('id').primaryKey(),
@@ -26,4 +27,5 @@ export const users = pgTable('users', {
 export const userRelations = relations(users, ({ one, many }) => ({
   usersToRoles: many(usersToRoles),
   profile: one(userProfile),
+  contents: many(contents)
 }));
