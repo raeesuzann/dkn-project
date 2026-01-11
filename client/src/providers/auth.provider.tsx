@@ -1,6 +1,5 @@
 import Loading from '@/components/ui/loading';
 import { api } from '@/lib/axios/config';
-import { useNavigate } from '@tanstack/react-router';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 interface User {
@@ -23,28 +22,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  const verifyToken = async () => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      const results = await api.get('/auth/verify-token', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      if (results.data.data) {
-        setUser(results.data.data);
-        setIsAuthenticated(true);
-      } else {
-        setUser(null);
-        setIsAuthenticated(false);
-        localStorage.removeItem('token');
-      }
-    }
-  };
-
   // Restore auth state on app load
   useEffect(() => {
+    const verifyToken = async () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        const results = await api.get('/auth/verify-token', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (results.data.data) {
+          setUser(results.data.data);
+          setIsAuthenticated(true);
+        } else {
+          setUser(null);
+          setIsAuthenticated(false);
+          localStorage.removeItem('token');
+        }
+      }
+      setIsLoading(false);
+    };
+
     verifyToken();
-    setIsLoading(false);
   }, []);
 
   // Show loading state while checking auth
