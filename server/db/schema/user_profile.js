@@ -12,12 +12,9 @@ import { relations } from 'drizzle-orm';
 
 export const userProfile = pgTable('user_profile', {
   id: serial('id').primaryKey(),
+  name: varchar('name', { length: 40 }).notNull(),
   dob: date('date_of_birth').notNull(),
-  profilePic: text('profile_pic'),
-  country: varchar('country', { length: 50 }),
-  postalAddress: varchar('postal_address', { length: 50 }),
-  town: varchar('town', { length: 50 }),
-  zipCode: varchar('zip_code', { length: 10 }),
+  address: varchar('address').notNull(),
 
   userId: integer('user_id')
     .notNull()

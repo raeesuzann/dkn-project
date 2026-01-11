@@ -4,6 +4,7 @@ import { loggerMiddleware } from './middleware/logger.middleware.js';
 
 import authRoutes from './routes/auth.routes.js';
 import { contentRoutes } from './routes/content.route.js';
+import { userRoutes } from './routes/user-management.routes.js';
 
 const app = express();
 app.use(
@@ -17,12 +18,13 @@ app.use(json());
 app.use(urlencoded({ extended: true }));
 app.use(loggerMiddleware);
 
-app.get('/', (req, res) => {
-  res.json({ title: 'Hello World' });
+app.get('/api/v1', (req, res) => {
+  res.json({ title: 'Hello from DKN System API' });
 });
 
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/content', contentRoutes);
+app.use('/api/v1/user', userRoutes);
 
 const PORT = 5000;
 

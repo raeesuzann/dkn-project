@@ -34,31 +34,34 @@ async function seedRoles(tx) {
 async function seedUserWithRole(tx) {
   const hashedPassword = await getPasswordHash('Test@98765');
 
-  const [superadmin] = await tx
+  const [systemadmin] = await tx
     .insert(users)
     .values({
-      email: 'superadmin@yopmail.com',
-      username: 'superadmin',
+      email: 'systemadmin@yopmail.com',
+      username: 'systemadmin',
       password: hashedPassword,
-      contactNumber: '1234567890',
+      contactNumber: '123456789',
+      isVerified: true,
     })
     .returning();
 
   await tx.insert(userProfile).values({
+    name: 'systemadmin',
     dob: '1990-01-01',
-    userId: superadmin.id,
+    userId: systemadmin.id,
+    address: 'London',
   });
 
-  const [superadminRole] = await tx
+  const [systemadminRole] = await tx
     .select()
     .from(roles)
     .where(eq(roles.name, 'superadmin'));
 
-  if (!superadminRole) throw new Error('Superadmin role not found');
+  if (!systemadminRole) throw new Error('System Admin role not found');
 
   await tx.insert(usersToRoles).values({
-    userId: superadmin.id,
-    roleId: superadminRole.id,
+    userId: systemadmin.id,
+    roleId: systemadminRole.id,
   });
 }
 
