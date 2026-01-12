@@ -4,10 +4,11 @@ export const Route = createFileRoute('/')({
   validateSearch: (search) => ({
     redirect: (search.redirect as string) || '/dashboard',
   }),
-  beforeLoad: ({ context, search }) => {
-    // Redirect if already authenticated
-    if (context.auth.isAuthenticated) {
-      throw redirect({ to: search.redirect });
+  beforeLoad: () => {
+    if (!localStorage.getItem('token')) {
+      throw redirect({
+        to: '/login',
+      });
     }
   },
   component: () => <Outlet />,
