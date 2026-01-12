@@ -34,6 +34,16 @@ const columns = [
     header: 'Created Date',
     cell: (info) => new Date(info.getValue()).toLocaleDateString(),
   }),
+  columnHelper.display({
+    header: 'Actions',
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    cell: ({ row }: { row: any }) => (
+      <div className="flex items-center gap-3">
+        {!row.original?.isGDPRChecked && <button>Pass GDPR</button>}
+        {!row.original?.isNLPCheckPassed && <button>Pass NLP</button>}
+      </div>
+    ),
+  }),
 ];
 
 function AwaitingDocuments() {

@@ -20,6 +20,7 @@ import { Route as AuthenticatedUserManagementIndexRouteImport } from './routes/_
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard/index'
 import { Route as AuthenticatedContentsIndexRouteImport } from './routes/_authenticated/contents/index'
 import { Route as AuthenticatedAwaitingDocumentsIndexRouteImport } from './routes/_authenticated/awaiting-documents/index'
+import { Route as AuthenticatedContentsAddRouteImport } from './routes/_authenticated/contents/add'
 import { Route as AuthenticatedContentsContentIdRouteImport } from './routes/_authenticated/contents/$contentId'
 import { Route as AuthenticatedContentsContentIdEditRouteImport } from './routes/_authenticated/contents/$contentId.edit'
 
@@ -81,6 +82,12 @@ const AuthenticatedAwaitingDocumentsIndexRoute =
     path: '/awaiting-documents/',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
+const AuthenticatedContentsAddRoute =
+  AuthenticatedContentsAddRouteImport.update({
+    id: '/contents/add',
+    path: '/contents/add',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedContentsContentIdRoute =
   AuthenticatedContentsContentIdRouteImport.update({
     id: '/contents/$contentId',
@@ -99,6 +106,7 @@ export interface FileRoutesByFullPath {
   '/leaderboard': typeof AuthenticatedLeaderboardRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/contents/$contentId': typeof AuthenticatedContentsContentIdRouteWithChildren
+  '/contents/add': typeof AuthenticatedContentsAddRoute
   '/awaiting-documents': typeof AuthenticatedAwaitingDocumentsIndexRoute
   '/contents': typeof AuthenticatedContentsIndexRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
@@ -112,6 +120,7 @@ export interface FileRoutesByTo {
   '/leaderboard': typeof AuthenticatedLeaderboardRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/contents/$contentId': typeof AuthenticatedContentsContentIdRouteWithChildren
+  '/contents/add': typeof AuthenticatedContentsAddRoute
   '/awaiting-documents': typeof AuthenticatedAwaitingDocumentsIndexRoute
   '/contents': typeof AuthenticatedContentsIndexRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
@@ -128,6 +137,7 @@ export interface FileRoutesById {
   '/_authenticated/leaderboard': typeof AuthenticatedLeaderboardRoute
   '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/contents/$contentId': typeof AuthenticatedContentsContentIdRouteWithChildren
+  '/_authenticated/contents/add': typeof AuthenticatedContentsAddRoute
   '/_authenticated/awaiting-documents/': typeof AuthenticatedAwaitingDocumentsIndexRoute
   '/_authenticated/contents/': typeof AuthenticatedContentsIndexRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
@@ -143,6 +153,7 @@ export interface FileRouteTypes {
     | '/leaderboard'
     | '/reports'
     | '/contents/$contentId'
+    | '/contents/add'
     | '/awaiting-documents'
     | '/contents'
     | '/dashboard'
@@ -156,6 +167,7 @@ export interface FileRouteTypes {
     | '/leaderboard'
     | '/reports'
     | '/contents/$contentId'
+    | '/contents/add'
     | '/awaiting-documents'
     | '/contents'
     | '/dashboard'
@@ -171,6 +183,7 @@ export interface FileRouteTypes {
     | '/_authenticated/leaderboard'
     | '/_authenticated/reports'
     | '/_authenticated/contents/$contentId'
+    | '/_authenticated/contents/add'
     | '/_authenticated/awaiting-documents/'
     | '/_authenticated/contents/'
     | '/_authenticated/dashboard/'
@@ -265,6 +278,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAwaitingDocumentsIndexRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/contents/add': {
+      id: '/_authenticated/contents/add'
+      path: '/contents/add'
+      fullPath: '/contents/add'
+      preLoaderRoute: typeof AuthenticatedContentsAddRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/contents/$contentId': {
       id: '/_authenticated/contents/$contentId'
       path: '/contents/$contentId'
@@ -301,6 +321,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedLeaderboardRoute: typeof AuthenticatedLeaderboardRoute
   AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
   AuthenticatedContentsContentIdRoute: typeof AuthenticatedContentsContentIdRouteWithChildren
+  AuthenticatedContentsAddRoute: typeof AuthenticatedContentsAddRoute
   AuthenticatedAwaitingDocumentsIndexRoute: typeof AuthenticatedAwaitingDocumentsIndexRoute
   AuthenticatedContentsIndexRoute: typeof AuthenticatedContentsIndexRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
@@ -312,6 +333,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedReportsRoute: AuthenticatedReportsRoute,
   AuthenticatedContentsContentIdRoute:
     AuthenticatedContentsContentIdRouteWithChildren,
+  AuthenticatedContentsAddRoute: AuthenticatedContentsAddRoute,
   AuthenticatedAwaitingDocumentsIndexRoute:
     AuthenticatedAwaitingDocumentsIndexRoute,
   AuthenticatedContentsIndexRoute: AuthenticatedContentsIndexRoute,

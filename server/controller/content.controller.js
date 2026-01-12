@@ -33,6 +33,7 @@ export const getContentDetailsById = async (req, res, next) => {
 
 export const addContent = async (req, res, next) => {
   const userId = req.user.userId;
+  const authorEmail = req.user.email;
   const newContent = req.body;
 
   const getRandomNLPCheckPass = () => Math.random() < 0.5;
@@ -45,6 +46,7 @@ export const addContent = async (req, res, next) => {
         userId: +userId,
         isNLPCheckPassed: getRandomNLPCheckPass(),
         isGDPRChecked: !newContent.isRegional,
+        author: authorEmail,
       })
       .returning();
 
@@ -59,7 +61,20 @@ export const addContent = async (req, res, next) => {
 };
 
 export const updateContent = async (req, res, next) => {
+  const contentId = req.query.contentId;
+  const updatedBody = req.body;
   try {
+    const [updatedContent] = db
+      .update(contents)
+      .set(updatedBody)
+      .where(eq(contents.id, +contentId))
+      .returning();
+
+    res.status(200).json({
+      data: updatedContent,
+      message: 'Content successfully updated',
+      success: true,
+    });
   } catch (error) {
     next(error);
   }

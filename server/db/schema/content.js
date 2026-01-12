@@ -14,7 +14,7 @@ export const contents = pgTable('contents', {
   id: serial('id').primaryKey(),
   title: varchar('title', { length: 30 }).notNull(),
   description: varchar('description').notNull(),
-  metdata: varchar('metadata', { length: 20 }).notNull(),
+  metadata: varchar('metadata', { length: 20 }).notNull(),
   files: varchar('files'),
   localisation: varchar('localisation'),
   author: varchar('author').notNull(),

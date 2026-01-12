@@ -1,7 +1,7 @@
 import { Table } from '@/components/table';
 import { columnHelper } from '@/components/table/utils';
 import { api } from '@/lib/axios/config';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 
 export const Route = createFileRoute('/_authenticated/contents/')({
@@ -39,6 +39,7 @@ const columns = [
 ];
 
 function ContentList() {
+  const navigate = useNavigate();
   const [contentList, setContentList] = useState([]);
 
   useEffect(() => {
@@ -55,7 +56,9 @@ function ContentList() {
       <h3 className="mb-8 text-3xl font-light">Contents</h3>
       <Table
         searchPlaceholder="Search Contents, Knowledge or Artifacts"
-        actions={<button>Add</button>}
+        actions={
+          <button onClick={() => navigate({ to: '/contents/add' })}>Add</button>
+        }
         data={contentList}
         columns={columns}
       />
