@@ -22,23 +22,37 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
+  const logout = () => {
+    setUser(null);
+    setIsAuthenticated(false);
+    localStorage.removeItem('token');
+  };
+
   // Restore auth state on app load
   useEffect(() => {
     const verifyToken = async () => {
       const token = localStorage.getItem('token');
-      if (token) {
-        const results = await api.get('/auth/verify-token');
 
-        if (results.data.data) {
-          setUser(results.data.data);
-          setIsAuthenticated(true);
-        } else {
-          setUser(null);
-          setIsAuthenticated(false);
-          localStorage.removeItem('token');
+      if (token) {
+        try {
+          const results = await api.get('/auth/verify-token');
+          if (results.data.data) {
+            setUser(results.data.data);
+            setIsAuthenticated(true);
+          } else {
+            setUser(null);
+            setIsAuthenticated(false);
+            localStorage.removeItem('token');
+          }
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error: any) {
+          console.log(error);
+          if (error.response?.status === 401) {
+            logout();
+            // window.location.reload()
+          }
         }
       }
-
       setIsLoading(false);
     };
 
@@ -58,12 +72,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } else {
       throw new Error('Authentication failed');
     }
-  };
-
-  const logout = () => {
-    setUser(null);
-    setIsAuthenticated(false);
-    localStorage.removeItem('token');
   };
 
   return (

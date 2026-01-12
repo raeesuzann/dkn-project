@@ -1,10 +1,18 @@
-import { eq, or } from 'drizzle-orm';
+import { and, eq, or } from 'drizzle-orm';
 import { db } from '../db/index.js';
 import { contents } from '../db/schema/content.js';
 
 export const getAllContentList = async (req, res, next) => {
   try {
-    const contentList = await db.select().from(contents);
+    const contentList = await db
+      .select()
+      .from(contents)
+      .where(
+        and(
+          eq(contents.isGDPRChecked, true),
+          eq(contents.isNLPCheckPassed, true)
+        )
+      );
 
     res.status(200).json({
       data: contentList,

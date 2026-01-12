@@ -64,6 +64,7 @@ function Sidebar() {
       </h3>
       {sidebarItems.map((item) => (
         <Link
+          key={item.title}
           to={item.link}
           className={twMerge(
             'flex items-center gap-2 mb-2 rounded-md hover:bg-gray-400 [&.active]:text-white [&.active]:bg-gray-600',

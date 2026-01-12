@@ -3,13 +3,11 @@ import { api } from '@/lib/axios/config';
 import { createFileRoute } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 
-import { createColumnHelper } from '@tanstack/react-table';
+import { columnHelper } from '@/components/table/utils';
 
 export const Route = createFileRoute('/_authenticated/user-management/')({
   component: UserManagement,
 });
-
-const columnHelper = createColumnHelper();
 
 const columns = [
   columnHelper.accessor('id', {

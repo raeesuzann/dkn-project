@@ -1,7 +1,12 @@
 /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { compareItems, rankItem } from "@tanstack/match-sorter-utils";
-import { type FilterFn, type SortingFn, sortingFns } from "@tanstack/react-table";
+import { compareItems, rankItem } from '@tanstack/match-sorter-utils';
+import {
+  createColumnHelper,
+  type FilterFn,
+  type SortingFn,
+  sortingFns,
+} from '@tanstack/react-table';
 
 // Define a custom fuzzy filter function that will apply ranking info to rows (using match-sorter utils)
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
@@ -32,4 +37,6 @@ const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
   return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId) : dir;
 };
 
-export { fuzzyFilter, fuzzySort };
+const columnHelper = createColumnHelper();
+
+export { fuzzyFilter, fuzzySort, columnHelper };
