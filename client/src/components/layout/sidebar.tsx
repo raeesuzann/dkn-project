@@ -1,6 +1,13 @@
 import { useGlobal } from '@/providers/global.provider';
 import { Link } from '@tanstack/react-router';
-import { Book, BookCheck, ChartScatter, Home, KanbanSquare, Users } from 'lucide-react';
+import {
+  Book,
+  BookCheck,
+  ChartScatter,
+  Home,
+  KanbanSquare,
+  Users,
+} from 'lucide-react';
 import { twMerge } from 'tailwind-merge';
 
 const sidebarItems = [
@@ -31,9 +38,9 @@ const sidebarItems = [
   },
   {
     icon: <Book />,
-    title: "Awaiting Documents",
-    link: "/awaiting-documents"
-  }
+    title: 'Awaiting Documents',
+    link: '/awaiting-documents',
+  },
 ];
 
 function Sidebar() {
@@ -47,7 +54,12 @@ function Sidebar() {
         isSidebarOpen ? 'w-[250px] p-3' : 'w-[60px] p-2'
       )}
     >
-      <h3 className="mt-8 mb-16 text-center text-2xl font-semibold">
+      <h3
+        className={twMerge(
+          'mt-8 mb-16 text-center text-2xl font-light',
+          !isSidebarOpen && 'text-lg'
+        )}
+      >
         {isSidebarOpen ? 'DKN System' : 'DKN'}
       </h3>
       {sidebarItems.map((item) => (

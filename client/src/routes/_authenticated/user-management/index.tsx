@@ -42,7 +42,7 @@ function UserManagement() {
 
   return (
     <div id="user-management">
-      <h3 className="mb-8 text-3xl font-semibold">User Management</h3>
+      <h3 className="mb-8 text-3xl font-light">User Management</h3>
       <Table
         searchPlaceholder="Search Users"
         data={userList}

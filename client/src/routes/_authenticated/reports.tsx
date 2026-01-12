@@ -8,7 +8,7 @@ export const Route = createFileRoute('/_authenticated/reports')({
 function Reports() {
   return (
     <div id="reports">
-      <h3 className="mb-8 text-3xl font-semibold">Reports</h3>
+      <h3 className="mb-8 text-3xl font-light">Reports</h3>
       <Table searchPlaceholder="Search Reports" data={[]} columns={[]} />
     </div>
   );

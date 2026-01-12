@@ -27,9 +27,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const verifyToken = async () => {
       const token = localStorage.getItem('token');
       if (token) {
-        const results = await api.get('/auth/verify-token', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const results = await api.get('/auth/verify-token');
 
         if (results.data.data) {
           setUser(results.data.data);
@@ -40,6 +38,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           localStorage.removeItem('token');
         }
       }
+
       setIsLoading(false);
     };
 

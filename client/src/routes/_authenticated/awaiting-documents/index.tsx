@@ -8,7 +8,7 @@ export const Route = createFileRoute('/_authenticated/awaiting-documents/')({
 function AwaitingDocuments() {
   return (
     <div id="awaiting-documents">
-      <h3 className="mb-8 text-3xl font-semibold">
+      <h3 className="mb-8 text-3xl font-light">
         Approval Awaiting Documents
       </h3>
       <Table

@@ -5,6 +5,7 @@ import { loggerMiddleware } from './middleware/logger.middleware.js';
 import authRoutes from './routes/auth.routes.js';
 import { contentRoutes } from './routes/content.route.js';
 import { userRoutes } from './routes/user-management.routes.js';
+import { errorHandler } from './middleware/error-handler.middleware.js';
 
 const app = express();
 app.use(
@@ -25,6 +26,8 @@ app.get('/api/v1', (req, res) => {
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/content', contentRoutes);
 app.use('/api/v1/user', userRoutes);
+
+app.use(errorHandler)
 
 const PORT = 5000;
 

@@ -9,7 +9,7 @@ export const Route = createFileRoute('/_authenticated/leaderboard')({
 function Leaderboard() {
   return (
     <div id="leaderboard" className="w-full h-full">
-      <h3 className="mb-8 text-3xl font-semibold">Leaderboard</h3>
+      <h3 className="mb-8 text-3xl font-light">Leaderboard</h3>
       <div className="flex gap-10 w-full">
         <div
           id="frequentlyAccessedContents"
