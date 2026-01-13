@@ -1,6 +1,6 @@
 import { api } from '@/lib/axios/config';
 import type { IContent } from '@/types/content.interface';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
@@ -9,6 +9,7 @@ export const Route = createFileRoute('/_authenticated/contents/add')({
 });
 
 function RouteComponent() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -17,13 +18,14 @@ function RouteComponent() {
   } = useForm<IContent>();
 
   const onSubmit = async (data: IContent) => {
-    console.log('Form submitted:', data);
     const contentAdded = await api.post('/content/add', data);
 
-    console.log(contentAdded, 'added');
     if (contentAdded.status === 201) {
       toast.success('Content added successfully');
       reset();
+      navigate({ to: '/contents' });
+    } else {
+      toast.error('Content add failed successfully');
     }
   };
 

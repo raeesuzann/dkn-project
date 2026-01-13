@@ -1,6 +1,7 @@
 import { eq } from 'drizzle-orm';
 import { db } from '../db/index.js';
 import { users } from '../db/schema/users.js';
+import { getPasswordHash } from '../services/bcrypt/password-hash.js';
 
 export const getAllUserList = async (req, res, next) => {
   try {
@@ -42,7 +43,25 @@ export const getUserById = async (req, res, next) => {
 };
 
 export const addUser = async (req, res, next) => {
+  const newUserPayload = req.body;
+  console.log(req.body)
   try {
+    const hashedPassword = await getPasswordHash('Test@98765');
+
+    const [newuser] = await db
+      .insert(users)
+      .values({
+        ...newUserPayload,
+        password: hashedPassword,
+        isVerified: true,
+      })
+      .returning();
+
+    res.status(201).json({
+      data: newuser,
+      message: 'User created successfully',
+      success: true,
+    });
   } catch (error) {
     next(error);
   }
