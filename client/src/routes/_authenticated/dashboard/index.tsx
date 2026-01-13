@@ -10,7 +10,7 @@ function Dashboard() {
     <div id="dashboard">
       <h3 className="mb-8 text-3xl font-light">Dashboard</h3>
 
-      <div id="content-summary" className="bg-white p-3 rounded-lg shadow">
+      <div id="content-summary" className="bg-gray-200 p-3 rounded-lg shadow">
         <HorizontalBarChart />
       </div>
     </div>

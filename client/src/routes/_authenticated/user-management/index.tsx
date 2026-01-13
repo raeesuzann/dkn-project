@@ -1,6 +1,6 @@
 import { Table } from '@/components/table';
 import { api } from '@/lib/axios/config';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 
 import { columnHelper } from '@/components/table/utils';
@@ -26,6 +26,7 @@ const columns = [
 ];
 
 function UserManagement() {
+  const navigate = useNavigate();
   const [userList, setUserList] = useState([]);
 
   useEffect(() => {
@@ -45,7 +46,14 @@ function UserManagement() {
         searchPlaceholder="Search Users"
         data={userList}
         columns={columns}
-        actions={<button type="button">Add</button>}
+        actions={
+          <button
+            className="bg-gray-700 text-white"
+            onClick={() => navigate({ to: '/user-management/add' })}
+          >
+            Add
+          </button>
+        }
       />
     </div>
   );

@@ -12,14 +12,16 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as PublicRouteImport } from './routes/_public'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
 import { Route as AuthenticatedLeaderboardRouteImport } from './routes/_authenticated/leaderboard'
 import { Route as PublicRegisterIndexRouteImport } from './routes/_public/register/index'
 import { Route as PublicLoginIndexRouteImport } from './routes/_public/login/index'
 import { Route as AuthenticatedUserManagementIndexRouteImport } from './routes/_authenticated/user-management/index'
+import { Route as AuthenticatedReportsIndexRouteImport } from './routes/_authenticated/reports/index'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard/index'
 import { Route as AuthenticatedContentsIndexRouteImport } from './routes/_authenticated/contents/index'
 import { Route as AuthenticatedAwaitingDocumentsIndexRouteImport } from './routes/_authenticated/awaiting-documents/index'
+import { Route as AuthenticatedUserManagementAddRouteImport } from './routes/_authenticated/user-management/add'
+import { Route as AuthenticatedReportsGenerateRouteImport } from './routes/_authenticated/reports/generate'
 import { Route as AuthenticatedContentsAddRouteImport } from './routes/_authenticated/contents/add'
 import { Route as AuthenticatedContentsContentIdRouteImport } from './routes/_authenticated/contents/$contentId'
 import { Route as AuthenticatedContentsContentIdEditRouteImport } from './routes/_authenticated/contents/$contentId.edit'
@@ -36,11 +38,6 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
-} as any)
-const AuthenticatedReportsRoute = AuthenticatedReportsRouteImport.update({
-  id: '/reports',
-  path: '/reports',
-  getParentRoute: () => AuthenticatedRoute,
 } as any)
 const AuthenticatedLeaderboardRoute =
   AuthenticatedLeaderboardRouteImport.update({
@@ -64,6 +61,12 @@ const AuthenticatedUserManagementIndexRoute =
     path: '/user-management/',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
+const AuthenticatedReportsIndexRoute =
+  AuthenticatedReportsIndexRouteImport.update({
+    id: '/reports/',
+    path: '/reports/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedDashboardIndexRoute =
   AuthenticatedDashboardIndexRouteImport.update({
     id: '/dashboard/',
@@ -80,6 +83,18 @@ const AuthenticatedAwaitingDocumentsIndexRoute =
   AuthenticatedAwaitingDocumentsIndexRouteImport.update({
     id: '/awaiting-documents/',
     path: '/awaiting-documents/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedUserManagementAddRoute =
+  AuthenticatedUserManagementAddRouteImport.update({
+    id: '/user-management/add',
+    path: '/user-management/add',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedReportsGenerateRoute =
+  AuthenticatedReportsGenerateRouteImport.update({
+    id: '/reports/generate',
+    path: '/reports/generate',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
 const AuthenticatedContentsAddRoute =
@@ -104,12 +119,14 @@ const AuthenticatedContentsContentIdEditRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/leaderboard': typeof AuthenticatedLeaderboardRoute
-  '/reports': typeof AuthenticatedReportsRoute
   '/contents/$contentId': typeof AuthenticatedContentsContentIdRouteWithChildren
   '/contents/add': typeof AuthenticatedContentsAddRoute
+  '/reports/generate': typeof AuthenticatedReportsGenerateRoute
+  '/user-management/add': typeof AuthenticatedUserManagementAddRoute
   '/awaiting-documents': typeof AuthenticatedAwaitingDocumentsIndexRoute
   '/contents': typeof AuthenticatedContentsIndexRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
+  '/reports': typeof AuthenticatedReportsIndexRoute
   '/user-management': typeof AuthenticatedUserManagementIndexRoute
   '/login': typeof PublicLoginIndexRoute
   '/register': typeof PublicRegisterIndexRoute
@@ -118,12 +135,14 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/leaderboard': typeof AuthenticatedLeaderboardRoute
-  '/reports': typeof AuthenticatedReportsRoute
   '/contents/$contentId': typeof AuthenticatedContentsContentIdRouteWithChildren
   '/contents/add': typeof AuthenticatedContentsAddRoute
+  '/reports/generate': typeof AuthenticatedReportsGenerateRoute
+  '/user-management/add': typeof AuthenticatedUserManagementAddRoute
   '/awaiting-documents': typeof AuthenticatedAwaitingDocumentsIndexRoute
   '/contents': typeof AuthenticatedContentsIndexRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
+  '/reports': typeof AuthenticatedReportsIndexRoute
   '/user-management': typeof AuthenticatedUserManagementIndexRoute
   '/login': typeof PublicLoginIndexRoute
   '/register': typeof PublicRegisterIndexRoute
@@ -135,12 +154,14 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/_public': typeof PublicRouteWithChildren
   '/_authenticated/leaderboard': typeof AuthenticatedLeaderboardRoute
-  '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/contents/$contentId': typeof AuthenticatedContentsContentIdRouteWithChildren
   '/_authenticated/contents/add': typeof AuthenticatedContentsAddRoute
+  '/_authenticated/reports/generate': typeof AuthenticatedReportsGenerateRoute
+  '/_authenticated/user-management/add': typeof AuthenticatedUserManagementAddRoute
   '/_authenticated/awaiting-documents/': typeof AuthenticatedAwaitingDocumentsIndexRoute
   '/_authenticated/contents/': typeof AuthenticatedContentsIndexRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
+  '/_authenticated/reports/': typeof AuthenticatedReportsIndexRoute
   '/_authenticated/user-management/': typeof AuthenticatedUserManagementIndexRoute
   '/_public/login/': typeof PublicLoginIndexRoute
   '/_public/register/': typeof PublicRegisterIndexRoute
@@ -151,12 +172,14 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/leaderboard'
-    | '/reports'
     | '/contents/$contentId'
     | '/contents/add'
+    | '/reports/generate'
+    | '/user-management/add'
     | '/awaiting-documents'
     | '/contents'
     | '/dashboard'
+    | '/reports'
     | '/user-management'
     | '/login'
     | '/register'
@@ -165,12 +188,14 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/leaderboard'
-    | '/reports'
     | '/contents/$contentId'
     | '/contents/add'
+    | '/reports/generate'
+    | '/user-management/add'
     | '/awaiting-documents'
     | '/contents'
     | '/dashboard'
+    | '/reports'
     | '/user-management'
     | '/login'
     | '/register'
@@ -181,12 +206,14 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/_public'
     | '/_authenticated/leaderboard'
-    | '/_authenticated/reports'
     | '/_authenticated/contents/$contentId'
     | '/_authenticated/contents/add'
+    | '/_authenticated/reports/generate'
+    | '/_authenticated/user-management/add'
     | '/_authenticated/awaiting-documents/'
     | '/_authenticated/contents/'
     | '/_authenticated/dashboard/'
+    | '/_authenticated/reports/'
     | '/_authenticated/user-management/'
     | '/_public/login/'
     | '/_public/register/'
@@ -222,13 +249,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/reports': {
-      id: '/_authenticated/reports'
-      path: '/reports'
-      fullPath: '/reports'
-      preLoaderRoute: typeof AuthenticatedReportsRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
     '/_authenticated/leaderboard': {
       id: '/_authenticated/leaderboard'
       path: '/leaderboard'
@@ -257,6 +277,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedUserManagementIndexRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/reports/': {
+      id: '/_authenticated/reports/'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof AuthenticatedReportsIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/dashboard/': {
       id: '/_authenticated/dashboard/'
       path: '/dashboard'
@@ -276,6 +303,20 @@ declare module '@tanstack/react-router' {
       path: '/awaiting-documents'
       fullPath: '/awaiting-documents'
       preLoaderRoute: typeof AuthenticatedAwaitingDocumentsIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/user-management/add': {
+      id: '/_authenticated/user-management/add'
+      path: '/user-management/add'
+      fullPath: '/user-management/add'
+      preLoaderRoute: typeof AuthenticatedUserManagementAddRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/reports/generate': {
+      id: '/_authenticated/reports/generate'
+      path: '/reports/generate'
+      fullPath: '/reports/generate'
+      preLoaderRoute: typeof AuthenticatedReportsGenerateRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/contents/add': {
@@ -319,25 +360,29 @@ const AuthenticatedContentsContentIdRouteWithChildren =
 
 interface AuthenticatedRouteChildren {
   AuthenticatedLeaderboardRoute: typeof AuthenticatedLeaderboardRoute
-  AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
   AuthenticatedContentsContentIdRoute: typeof AuthenticatedContentsContentIdRouteWithChildren
   AuthenticatedContentsAddRoute: typeof AuthenticatedContentsAddRoute
+  AuthenticatedReportsGenerateRoute: typeof AuthenticatedReportsGenerateRoute
+  AuthenticatedUserManagementAddRoute: typeof AuthenticatedUserManagementAddRoute
   AuthenticatedAwaitingDocumentsIndexRoute: typeof AuthenticatedAwaitingDocumentsIndexRoute
   AuthenticatedContentsIndexRoute: typeof AuthenticatedContentsIndexRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
+  AuthenticatedReportsIndexRoute: typeof AuthenticatedReportsIndexRoute
   AuthenticatedUserManagementIndexRoute: typeof AuthenticatedUserManagementIndexRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedLeaderboardRoute: AuthenticatedLeaderboardRoute,
-  AuthenticatedReportsRoute: AuthenticatedReportsRoute,
   AuthenticatedContentsContentIdRoute:
     AuthenticatedContentsContentIdRouteWithChildren,
   AuthenticatedContentsAddRoute: AuthenticatedContentsAddRoute,
+  AuthenticatedReportsGenerateRoute: AuthenticatedReportsGenerateRoute,
+  AuthenticatedUserManagementAddRoute: AuthenticatedUserManagementAddRoute,
   AuthenticatedAwaitingDocumentsIndexRoute:
     AuthenticatedAwaitingDocumentsIndexRoute,
   AuthenticatedContentsIndexRoute: AuthenticatedContentsIndexRoute,
   AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
+  AuthenticatedReportsIndexRoute: AuthenticatedReportsIndexRoute,
   AuthenticatedUserManagementIndexRoute: AuthenticatedUserManagementIndexRoute,
 }
 

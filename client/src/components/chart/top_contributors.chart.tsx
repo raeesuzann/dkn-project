@@ -51,8 +51,7 @@ const data = {
     {
       label: 'User2',
       data: labels.map(() => faker.number.int({ min: 3, max: 50 })),
-      borderColor: 'rgb(53, 162, 235)',
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      backgroundColor: 'rgb(53, 162, 235)',
     },
     {
       label: 'User3',
@@ -62,8 +61,7 @@ const data = {
     {
       label: 'User4',
       data: labels.map(() => faker.number.int({ min: 3, max: 50 })),
-      borderColor: 'rgb(53, 162, 235)',
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      backgroundColor: 'rgb(53, 162, 235)',
     },
     {
       label: 'User5',
@@ -73,8 +71,7 @@ const data = {
     {
       label: 'User6',
       data: labels.map(() => faker.number.int({ min: 3, max: 50 })),
-      borderColor: 'rgb(53, 162, 235)',
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      backgroundColor: 'rgb(53, 162, 235)',
     },
     {
       label: 'User7',
@@ -84,8 +81,7 @@ const data = {
     {
       label: 'User8',
       data: labels.map(() => faker.number.int({ min: 3, max: 50 })),
-      borderColor: 'rgb(53, 162, 235)',
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      backgroundColor: 'rgb(53, 162, 235)',
     },
   ],
 };

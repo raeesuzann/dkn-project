@@ -53,12 +53,12 @@ const data = {
     {
       label: 'Flagged Content',
       data: labels.map(() => faker.number.int({ min: 0, max: 50 })),
-      backgroundColor: 'rgb(178, 19, 53)',
+      backgroundColor: 'rgb(120, 31, 50)',
     },
     {
       label: 'Verified Content',
       data: labels.map(() => faker.number.int({ min: 0, max: 50 })),
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      backgroundColor: 'rgb(53, 162, 235)',
     },
   ],
 };
