@@ -41,7 +41,7 @@ const columns = [
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     cell: ({ row }: { row: any }) => (
       <div className="flex items-center justify-end">
-        <div className="flex gap-4 w-[300px]">
+        <div className="flex gap-2 w-[350px]">
           <button>
             <View size={18} />
           </button>

@@ -20,7 +20,7 @@ export const Route = createFileRoute('/_authenticated')({
       <Sidebar />
       <div className="flex flex-col w-full">
         <Navbar />
-        <div className="px-3 py-2 grow">
+        <div className="px-4 py-2 grow">
           <Outlet />
         </div>
         <Footer />

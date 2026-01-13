@@ -92,7 +92,7 @@ export function Table<T>({
                   <TableHead
                     key={header.id}
                     colSpan={header.colSpan}
-                    className="bg-info-dark text-white font-semibold"
+                    className="dark:text-white font-semibold"
                   >
                     {header.isPlaceholder ? null : (
                       <div>

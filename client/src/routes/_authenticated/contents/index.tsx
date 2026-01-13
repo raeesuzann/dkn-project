@@ -57,7 +57,7 @@ function ContentList() {
       <Table
         searchPlaceholder="Search Contents, Knowledge or Artifacts"
         actions={
-          <button onClick={() => navigate({ to: '/contents/add' })}>Add</button>
+          <button className='bg-gray-700 text-white' onClick={() => navigate({ to: '/contents/add' })}>Add</button>
         }
         data={contentList}
         columns={columns}

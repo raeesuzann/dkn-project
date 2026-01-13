@@ -50,8 +50,8 @@ function Sidebar() {
     <div
       id="sidebar"
       className={twMerge(
-        'flex flex-col shrink-0 transition delay-300',
-        isSidebarOpen ? 'w-[250px] p-3' : 'w-[60px] p-2'
+        'flex flex-col shrink-0 transition delay-300 border-r dark:border-gray-700 border-gray-300',
+        isSidebarOpen ? 'w-[300px] p-3' : 'w-[60px] p-2'
       )}
     >
       <h3

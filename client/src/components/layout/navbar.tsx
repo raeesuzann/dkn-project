@@ -14,10 +14,12 @@ function Navbar() {
   };
 
   return (
-    <div id="navbar" className="flex items-center justify-between p-3">
-      <button onClick={toggleSidebar} className="p-2 rounded">
-        <MenuIcon size={18} />
-      </button>
+    <div id="navbar" className="flex items-center justify-between p-3 border-b dark:border-gray-700 border-gray-300">
+      <MenuIcon
+        size={20}
+        onClick={toggleSidebar}
+        className="rounded cursor-pointer"
+      />
       <div className="flex items-center gap-2">
         <button onClick={() => {}} className="p-2 rounded">
           <User size={18} className="cursor-pointer" />
