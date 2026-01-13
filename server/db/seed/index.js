@@ -8,7 +8,13 @@ import { users } from '../schema/users.js';
 import { usersToRoles } from '../schema/users_roles.js';
 
 async function seedRoles(tx) {
-  const defaultRoles = ['user', 'admin', 'superadmin'];
+  const defaultRoles = [
+    'user',
+    'moderator',
+    'system_admin',
+    'database_admin',
+    'superadmin',
+  ];
 
   // Fetch roles already in DB
   const existingRoles = await tx
@@ -31,9 +37,7 @@ async function seedRoles(tx) {
   }
 }
 
-async function seedUserWithRole(tx) {
-  const hashedPassword = await getPasswordHash('Test@98765');
-
+async function seedSystemAdmin(hashedPassword, tx) {
   const [systemadmin] = await tx
     .insert(users)
     .values({
@@ -63,6 +67,45 @@ async function seedUserWithRole(tx) {
     userId: systemadmin.id,
     roleId: systemadminRole.id,
   });
+}
+
+async function seedDatabaseAdmin(hashedPassword, tx) {
+  const [databaseAdmin] = await tx
+    .insert(users)
+    .values({
+      email: 'databaseadmin@yopmail.com',
+      username: 'databaseadmin',
+      password: hashedPassword,
+      contactNumber: '123456789',
+      isVerified: true,
+    })
+    .returning();
+
+  await tx.insert(userProfile).values({
+    name: 'databaseadmin',
+    dob: '1990-01-01',
+    userId: databaseAdmin.id,
+    address: 'London',
+  });
+
+  const [databaseAdminRole] = await tx
+    .select()
+    .from(roles)
+    .where(eq(roles.name, 'database_admin'));
+
+  if (!databaseAdminRole) throw new Error('Database Admin role not found');
+
+  await tx.insert(usersToRoles).values({
+    userId: databaseAdmin.id,
+    roleId: databaseAdminRole.id,
+  });
+}
+
+async function seedUserWithRole(tx) {
+  const hashedPassword = await getPasswordHash('Test@98765');
+
+  // seedSystemAdmin(hashedPassword, tx);
+  seedDatabaseAdmin(hashedPassword, tx);
 }
 
 async function seed() {

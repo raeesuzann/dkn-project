@@ -4,6 +4,7 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 
 import { columnHelper } from '@/components/table/utils';
+import { Trash, View } from 'lucide-react';
 
 export const Route = createFileRoute('/_authenticated/user-management/')({
   component: UserManagement,
@@ -31,6 +32,23 @@ const columns = [
           InActive
         </div>
       ),
+  }),
+  columnHelper.display({
+    id: 'actions',
+    header: () => <div className="text-end">Actions</div>,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    cell: () => (
+      <div className="flex items-center justify-end">
+        <div className="flex gap-2">
+          <button>
+            <View size={18} />
+          </button>
+          <button>
+            <Trash size={18} />
+          </button>
+        </div>
+      </div>
+    ),
   }),
 ];
 
