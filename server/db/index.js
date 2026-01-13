@@ -6,25 +6,15 @@ import { schema } from './schema/index.js';
 
 const pool = new Pool({
   connectionString: config.databaseUrl,
+  max: 10, // max concurrent connections
+  idleTimeoutMillis: 30000, // close idle clients after 30s
+  connectionTimeoutMillis: 2000,
 });
 
-async function connect() {
-  try {
-    await pool.connect();
-    console.log('Successfully connected to database');
-  } catch (error) {
-    console.error('Error connecting to database:', error);
-    process.exit(1);
-  }
-}
+pool.on('error', (err) => {
+  console.error('Unexpected PG error', err);
+});
 
-(async () => {
-  await connect();
-})();
+export const db = drizzle(pool, { schema });
 
-export const db = drizzle(
-  {
-    client: pool,
-  },
-  { schema }
-);
+console.log('Drizzle pool is ready. Successfully connected to database');
