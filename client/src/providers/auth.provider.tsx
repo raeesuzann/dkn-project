@@ -36,6 +36,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (token) {
         try {
           const results = await api.get('/auth/verify-token');
+
           if (results.data.data) {
             setUser(results.data.data);
             setIsAuthenticated(true);

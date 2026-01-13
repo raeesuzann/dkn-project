@@ -2,6 +2,7 @@ import { Table } from '@/components/table';
 import { columnHelper } from '@/components/table/utils';
 import { api } from '@/lib/axios/config';
 import { createFileRoute } from '@tanstack/react-router';
+import { View } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 export const Route = createFileRoute('/_authenticated/awaiting-documents/')({
@@ -20,7 +21,7 @@ const columns = [
   }),
   columnHelper.accessor('isActive', {
     header: 'Status',
-    cell: (info) => (info.getValue() ? '✅' : '❌'),
+    cell: (info) => (info.getValue() ? 'Active' : 'Inactive'),
   }),
   columnHelper.accessor('isGDPRChecked', {
     header: 'GDPR Check',
@@ -35,12 +36,22 @@ const columns = [
     cell: (info) => new Date(info.getValue()).toLocaleDateString(),
   }),
   columnHelper.display({
-    header: 'Actions',
+    id: 'actions',
+    header: () => <div className="text-center">Actions</div>,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     cell: ({ row }: { row: any }) => (
-      <div className="flex items-center gap-3">
-        {!row.original?.isGDPRChecked && <button>Pass GDPR</button>}
-        {!row.original?.isNLPCheckPassed && <button>Pass NLP</button>}
+      <div className="flex items-center justify-end">
+        <div className="flex gap-4 w-[300px]">
+          <button>
+            <View size={18} />
+          </button>
+          {!row.original?.isGDPRChecked && (
+            <button className="bg-green-700">Pass GDPR</button>
+          )}
+          {!row.original?.isNLPCheckPassed && (
+            <button className="bg-green-700">Pass NLP</button>
+          )}
+        </div>
       </div>
     ),
   }),

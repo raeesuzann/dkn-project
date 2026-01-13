@@ -61,6 +61,7 @@ function ContentList() {
         }
         data={contentList}
         columns={columns}
+        
       />
     </div>
   );
