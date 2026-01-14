@@ -6,6 +6,7 @@ import {
   ChartScatter,
   Home,
   KanbanSquare,
+  PenToolIcon,
   Users,
 } from 'lucide-react';
 import { twMerge } from 'tailwind-merge';
@@ -40,6 +41,11 @@ const sidebarItems = [
     icon: <Book />,
     title: 'Awaiting Documents',
     link: '/awaiting-documents',
+  },
+  {
+    icon: <PenToolIcon />,
+    title: 'Policies',
+    link: '/policy',
   },
 ];
 

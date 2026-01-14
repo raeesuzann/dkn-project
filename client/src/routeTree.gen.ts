@@ -17,11 +17,13 @@ import { Route as PublicRegisterIndexRouteImport } from './routes/_public/regist
 import { Route as PublicLoginIndexRouteImport } from './routes/_public/login/index'
 import { Route as AuthenticatedUserManagementIndexRouteImport } from './routes/_authenticated/user-management/index'
 import { Route as AuthenticatedReportsIndexRouteImport } from './routes/_authenticated/reports/index'
+import { Route as AuthenticatedPolicyIndexRouteImport } from './routes/_authenticated/policy/index'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard/index'
 import { Route as AuthenticatedContentsIndexRouteImport } from './routes/_authenticated/contents/index'
 import { Route as AuthenticatedAwaitingDocumentsIndexRouteImport } from './routes/_authenticated/awaiting-documents/index'
 import { Route as AuthenticatedUserManagementAddRouteImport } from './routes/_authenticated/user-management/add'
 import { Route as AuthenticatedReportsGenerateRouteImport } from './routes/_authenticated/reports/generate'
+import { Route as AuthenticatedPolicyAddRouteImport } from './routes/_authenticated/policy/add'
 import { Route as AuthenticatedContentsAddRouteImport } from './routes/_authenticated/contents/add'
 import { Route as AuthenticatedContentsContentIdRouteImport } from './routes/_authenticated/contents/$contentId'
 import { Route as AuthenticatedContentsContentIdEditRouteImport } from './routes/_authenticated/contents/$contentId.edit'
@@ -67,6 +69,12 @@ const AuthenticatedReportsIndexRoute =
     path: '/reports/',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
+const AuthenticatedPolicyIndexRoute =
+  AuthenticatedPolicyIndexRouteImport.update({
+    id: '/policy/',
+    path: '/policy/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedDashboardIndexRoute =
   AuthenticatedDashboardIndexRouteImport.update({
     id: '/dashboard/',
@@ -97,6 +105,11 @@ const AuthenticatedReportsGenerateRoute =
     path: '/reports/generate',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
+const AuthenticatedPolicyAddRoute = AuthenticatedPolicyAddRouteImport.update({
+  id: '/policy/add',
+  path: '/policy/add',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 const AuthenticatedContentsAddRoute =
   AuthenticatedContentsAddRouteImport.update({
     id: '/contents/add',
@@ -121,11 +134,13 @@ export interface FileRoutesByFullPath {
   '/leaderboard': typeof AuthenticatedLeaderboardRoute
   '/contents/$contentId': typeof AuthenticatedContentsContentIdRouteWithChildren
   '/contents/add': typeof AuthenticatedContentsAddRoute
+  '/policy/add': typeof AuthenticatedPolicyAddRoute
   '/reports/generate': typeof AuthenticatedReportsGenerateRoute
   '/user-management/add': typeof AuthenticatedUserManagementAddRoute
   '/awaiting-documents': typeof AuthenticatedAwaitingDocumentsIndexRoute
   '/contents': typeof AuthenticatedContentsIndexRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
+  '/policy': typeof AuthenticatedPolicyIndexRoute
   '/reports': typeof AuthenticatedReportsIndexRoute
   '/user-management': typeof AuthenticatedUserManagementIndexRoute
   '/login': typeof PublicLoginIndexRoute
@@ -137,11 +152,13 @@ export interface FileRoutesByTo {
   '/leaderboard': typeof AuthenticatedLeaderboardRoute
   '/contents/$contentId': typeof AuthenticatedContentsContentIdRouteWithChildren
   '/contents/add': typeof AuthenticatedContentsAddRoute
+  '/policy/add': typeof AuthenticatedPolicyAddRoute
   '/reports/generate': typeof AuthenticatedReportsGenerateRoute
   '/user-management/add': typeof AuthenticatedUserManagementAddRoute
   '/awaiting-documents': typeof AuthenticatedAwaitingDocumentsIndexRoute
   '/contents': typeof AuthenticatedContentsIndexRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
+  '/policy': typeof AuthenticatedPolicyIndexRoute
   '/reports': typeof AuthenticatedReportsIndexRoute
   '/user-management': typeof AuthenticatedUserManagementIndexRoute
   '/login': typeof PublicLoginIndexRoute
@@ -156,11 +173,13 @@ export interface FileRoutesById {
   '/_authenticated/leaderboard': typeof AuthenticatedLeaderboardRoute
   '/_authenticated/contents/$contentId': typeof AuthenticatedContentsContentIdRouteWithChildren
   '/_authenticated/contents/add': typeof AuthenticatedContentsAddRoute
+  '/_authenticated/policy/add': typeof AuthenticatedPolicyAddRoute
   '/_authenticated/reports/generate': typeof AuthenticatedReportsGenerateRoute
   '/_authenticated/user-management/add': typeof AuthenticatedUserManagementAddRoute
   '/_authenticated/awaiting-documents/': typeof AuthenticatedAwaitingDocumentsIndexRoute
   '/_authenticated/contents/': typeof AuthenticatedContentsIndexRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
+  '/_authenticated/policy/': typeof AuthenticatedPolicyIndexRoute
   '/_authenticated/reports/': typeof AuthenticatedReportsIndexRoute
   '/_authenticated/user-management/': typeof AuthenticatedUserManagementIndexRoute
   '/_public/login/': typeof PublicLoginIndexRoute
@@ -174,11 +193,13 @@ export interface FileRouteTypes {
     | '/leaderboard'
     | '/contents/$contentId'
     | '/contents/add'
+    | '/policy/add'
     | '/reports/generate'
     | '/user-management/add'
     | '/awaiting-documents'
     | '/contents'
     | '/dashboard'
+    | '/policy'
     | '/reports'
     | '/user-management'
     | '/login'
@@ -190,11 +211,13 @@ export interface FileRouteTypes {
     | '/leaderboard'
     | '/contents/$contentId'
     | '/contents/add'
+    | '/policy/add'
     | '/reports/generate'
     | '/user-management/add'
     | '/awaiting-documents'
     | '/contents'
     | '/dashboard'
+    | '/policy'
     | '/reports'
     | '/user-management'
     | '/login'
@@ -208,11 +231,13 @@ export interface FileRouteTypes {
     | '/_authenticated/leaderboard'
     | '/_authenticated/contents/$contentId'
     | '/_authenticated/contents/add'
+    | '/_authenticated/policy/add'
     | '/_authenticated/reports/generate'
     | '/_authenticated/user-management/add'
     | '/_authenticated/awaiting-documents/'
     | '/_authenticated/contents/'
     | '/_authenticated/dashboard/'
+    | '/_authenticated/policy/'
     | '/_authenticated/reports/'
     | '/_authenticated/user-management/'
     | '/_public/login/'
@@ -284,6 +309,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedReportsIndexRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/policy/': {
+      id: '/_authenticated/policy/'
+      path: '/policy'
+      fullPath: '/policy'
+      preLoaderRoute: typeof AuthenticatedPolicyIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/dashboard/': {
       id: '/_authenticated/dashboard/'
       path: '/dashboard'
@@ -317,6 +349,13 @@ declare module '@tanstack/react-router' {
       path: '/reports/generate'
       fullPath: '/reports/generate'
       preLoaderRoute: typeof AuthenticatedReportsGenerateRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/policy/add': {
+      id: '/_authenticated/policy/add'
+      path: '/policy/add'
+      fullPath: '/policy/add'
+      preLoaderRoute: typeof AuthenticatedPolicyAddRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/contents/add': {
@@ -362,11 +401,13 @@ interface AuthenticatedRouteChildren {
   AuthenticatedLeaderboardRoute: typeof AuthenticatedLeaderboardRoute
   AuthenticatedContentsContentIdRoute: typeof AuthenticatedContentsContentIdRouteWithChildren
   AuthenticatedContentsAddRoute: typeof AuthenticatedContentsAddRoute
+  AuthenticatedPolicyAddRoute: typeof AuthenticatedPolicyAddRoute
   AuthenticatedReportsGenerateRoute: typeof AuthenticatedReportsGenerateRoute
   AuthenticatedUserManagementAddRoute: typeof AuthenticatedUserManagementAddRoute
   AuthenticatedAwaitingDocumentsIndexRoute: typeof AuthenticatedAwaitingDocumentsIndexRoute
   AuthenticatedContentsIndexRoute: typeof AuthenticatedContentsIndexRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
+  AuthenticatedPolicyIndexRoute: typeof AuthenticatedPolicyIndexRoute
   AuthenticatedReportsIndexRoute: typeof AuthenticatedReportsIndexRoute
   AuthenticatedUserManagementIndexRoute: typeof AuthenticatedUserManagementIndexRoute
 }
@@ -376,12 +417,14 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedContentsContentIdRoute:
     AuthenticatedContentsContentIdRouteWithChildren,
   AuthenticatedContentsAddRoute: AuthenticatedContentsAddRoute,
+  AuthenticatedPolicyAddRoute: AuthenticatedPolicyAddRoute,
   AuthenticatedReportsGenerateRoute: AuthenticatedReportsGenerateRoute,
   AuthenticatedUserManagementAddRoute: AuthenticatedUserManagementAddRoute,
   AuthenticatedAwaitingDocumentsIndexRoute:
     AuthenticatedAwaitingDocumentsIndexRoute,
   AuthenticatedContentsIndexRoute: AuthenticatedContentsIndexRoute,
   AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
+  AuthenticatedPolicyIndexRoute: AuthenticatedPolicyIndexRoute,
   AuthenticatedReportsIndexRoute: AuthenticatedReportsIndexRoute,
   AuthenticatedUserManagementIndexRoute: AuthenticatedUserManagementIndexRoute,
 }
