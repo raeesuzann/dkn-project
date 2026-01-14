@@ -61,10 +61,12 @@ export const addContent = async (req, res, next) => {
 };
 
 export const updateContent = async (req, res, next) => {
-  const contentId = req.query.contentId;
+  const contentId = req.params.id;
   const updatedBody = req.body;
+
+  console.log(req.body, contentId);
   try {
-    const [updatedContent] = db
+    const [updatedContent] = await db
       .update(contents)
       .set(updatedBody)
       .where(eq(contents.id, +contentId))
